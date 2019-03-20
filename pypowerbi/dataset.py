@@ -16,7 +16,7 @@ class Dataset:
     is_effective_identity_roles_required_key = 'isEffectiveIdentityRolesRequired'
     is_on_prem_gateway_required_key = 'isOnPremGatewayRequired'
     tables_key = 'tables'
-	relationships_key = 'relationships'
+    relationships_key = 'relationships'
 	
 
     def __init__(self, name, dataset_id=None, tables=None, relationships=None,add_rows_api_enabled=None,
@@ -25,7 +25,7 @@ class Dataset:
         self.name = name
         self.id = dataset_id
         self.tables = tables
-		self.relationships=relationships
+        self.relationships=relationships
         self.add_rows_api_enabled = add_rows_api_enabled
         self.configured_by = configured_by
         self.is_refreshable = is_refreshable
@@ -106,7 +106,7 @@ class Dataset:
 class DatasetEncoder(json.JSONEncoder):
     def default(self, o):
         table_encoder = TableEncoder()
-		relationship_encoder=RelationshipEncoder()
+        relationship_encoder=RelationshipEncoder()
 
         json_dict = {
             Dataset.name_key: o.name,
@@ -173,13 +173,12 @@ class TableEncoder(json.JSONEncoder):
 #<SOE>
 
 class Relationship:
-	crossFilteringBehavior_key='crossFilteringBehavior'
-	fromColumn_key='fromColumn'
-	fromTable_key='fromTable'
-	name_key='name'
-	toColumn_key='toColumn'
-	toTable_key='toTable'
-
+    crossFilteringBehavior_key='crossFilteringBehavior'
+    fromColumn_key='fromColumn'
+    fromTable_key='fromTable'
+    name_key='name'
+    toColumn_key='toColumn'
+    toTable_key='toTable'
     @classmethod
     def from_dict(cls, dictionary):
         """
@@ -221,9 +220,9 @@ class Relationship:
             if relationship_toColumn.isspace():
                 raise RuntimeError('Relationship dict has empty toColumn key value')
         else:
-            raise RuntimeError('Relationship dict has no toColumn key')			
-       
-	    # fromTable is required
+            raise RuntimeError('Relationship dict has no toColumn key')
+        
+        # fromTable is required
         if Relationship.fromTable_key in dictionary:
             relationship_fromTable = str(dictionary[Relationship.fromTable_key])
             # name cannot be whitespace
@@ -242,16 +241,16 @@ class Relationship:
             raise RuntimeError('Relationship dict has no toTable key')
 
         return Relationship(name=relationship_name, crossFilteringBehavior=relationship_crossFilteringBehavior, 
-											fromColumn=relationship_fromColumn, toColumn=relationship_toColumn, 
-											fromTable=relationship_fromTable, toTable=relationship_toTable)
+                            fromColumn=relationship_fromColumn, toColumn=relationship_toColumn, 
+                            fromTable=relationship_fromTable, toTable=relationship_toTable)
 
-    def __init__(self, name, crossFilteringBehavior=None, fromColumn=None, fromTable=None, name=None, toColumn=None, toTable=None):
-		self.crossFilteringBehavior=crossFilteringBehavior
-		self.fromColumn=fromColumn
-		self.fromTable=fromTable
-		self.name=name
-		self.toColumn=toColumn
-		self.toTable=toTable
+    def __init__(self, crossFilteringBehavior=None, fromColumn=None, fromTable=None, name=None, toColumn=None, toTable=None):
+        self.crossFilteringBehavior=crossFilteringBehavior
+        self.fromColumn=fromColumn
+        self.fromTable=fromTable
+        self.name=name
+        self.toColumn=toColumn
+        self.toTable=toTable
 
     def __repr__(self):
         return f'<Relationship {str(self.__dict__)}>'
@@ -260,17 +259,15 @@ class Relationship:
 class RelationshipEncoder(json.JSONEncoder):
     def default(self, o):
         json_dict = {
-			Relationship.crossFilteringBehavior_key:o.crossFilteringBehavior,
-			Relationship.fromColumn_key:o.fromColumn,
-			Relationship.fromTable_key:o.fromTable,
-			Relationship.name_key:o.name,
-			Relationship.toColumn_key:o.toColumn,
-			Relationship.toTable_key:o.toTable,
+            Relationship.crossFilteringBehavior_key:o.crossFilteringBehavior,
+            Relationship.fromColumn_key:o.fromColumn,
+            Relationship.fromTable_key:o.fromTable,
+            Relationship.name_key:o.name,
+            Relationship.toColumn_key:o.toColumn,
+            Relationship.toTable_key:o.toTable,
         }
 
         return json_dict
-
-
 #edit <EOE>
 
 
