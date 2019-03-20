@@ -122,7 +122,6 @@ class Datasets:
         json_dict = DatasetEncoder().default(dataset)
 
         # get the response
-        print(url)
         response = requests.post(url, headers=headers, json=json_dict)
 
         # 201 - Created. The request was fulfilled and a new Dataset was created.
