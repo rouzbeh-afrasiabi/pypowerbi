@@ -15,6 +15,7 @@ class Datasets:
     rows_snippet = 'rows'
     parameters_snippet = 'parameters'
     refreshes_snippet = 'refreshes'
+	relationships_snippet = 'relationships'
 
     # json keys
     get_datasets_value_key = 'value'
@@ -179,7 +180,7 @@ class Datasets:
             groups_part = f'/{self.groups_snippet}/{group_id}/'
 
         # form the url
-        url = f'{self.base_url}{groups_part}/{self.datasets_snippet}/{dataset_id}/{self.tables_snippet}'
+        url = f'{self.base_url}{groups_part}/{self.datasets_snippet}/{dataset_id}/{self.tables_snippet}/{self.relationships_snippet}'
         # form the headers
         headers = self.client.auth_header
 
