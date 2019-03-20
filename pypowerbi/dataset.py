@@ -13,13 +13,16 @@ class Dataset:
     is_effective_identity_roles_required_key = 'isEffectiveIdentityRolesRequired'
     is_on_prem_gateway_required_key = 'isOnPremGatewayRequired'
     tables_key = 'tables'
+	relationships_key = 'relationships'
+	
 
-    def __init__(self, name, dataset_id=None, tables=None, add_rows_api_enabled=None,
+    def __init__(self, name, dataset_id=None, tables=None, relationships=None,add_rows_api_enabled=None,
                  configured_by=None, is_refreshable=None, is_effective_identity_required=None,
                  is_effective_identity_roles_required=None, is_on_prem_gateway_required=None):
         self.name = name
         self.id = dataset_id
         self.tables = tables
+		self.relationships=relationships
         self.add_rows_api_enabled = add_rows_api_enabled
         self.configured_by = configured_by
         self.is_refreshable = is_refreshable
@@ -100,10 +103,12 @@ class Dataset:
 class DatasetEncoder(json.JSONEncoder):
     def default(self, o):
         table_encoder = TableEncoder()
+		relationship_encoder=RelationshipEncoder()
 
         json_dict = {
             Dataset.name_key: o.name,
             Dataset.tables_key: [table_encoder.default(x) for x in o.tables],
+			Dataset.relationships_key: [relationship_encoder.default(x) for x in o.relationships]
         }
 
         return json_dict
@@ -162,6 +167,108 @@ class TableEncoder(json.JSONEncoder):
             json_dict[Table.measures_key] = [measure_encoder.default(x) for x in o.measures]
 
         return json_dict
+#<SOE>
+
+class Relationship:
+	crossFilteringBehavior_key='crossFilteringBehavior'
+	fromColumn_key='fromColumn'
+	fromTable_key='fromTable'
+	name_key='name'
+	toColumn_key='toColumn'
+	toTable_key='toTable'
+
+    @classmethod
+    def from_dict(cls, dictionary):
+        """
+        Creates a Relationship from a dictionary, 'name' key value required
+        :param dictionary: The dictionary to create the table from
+        :return: A relationship created from the dictionary
+        """
+        # name is required
+        if Relationship.name_key in dictionary:
+            relationship_name = str(dictionary[Relationship.name_key])
+            # name cannot be whitespace
+            if relationship_name.isspace():
+                raise RuntimeError('Relationship dict has empty name key value')
+        else:
+            raise RuntimeError('Relationship dict has no name key')
+
+        # crossFilteringBehavior is required
+        if Relationship.crossFilteringBehavior_key in dictionary:
+            relationship_crossFilteringBehavior = str(dictionary[Relationship.crossFilteringBehavior_key])
+            # name cannot be whitespace
+            if relationship_crossFilteringBehavior.isspace():
+                raise RuntimeError('Relationship dict has empty crossFilteringBehavior key value')
+        else:
+            raise RuntimeError('Relationship dict has no crossFilteringBehavior key')
+ 
+        # fromColumn is required
+        if Relationship.fromColumn_key in dictionary:
+            relationship_fromColumn = str(dictionary[Relationship.fromColumn_key])
+            # name cannot be whitespace
+            if relationship_fromColumn.isspace():
+                raise RuntimeError('Relationship dict has empty fromColumn key value')
+        else:
+            raise RuntimeError('Relationship dict has no fromColumn key')
+
+        # toColumn is required
+        if Relationship.toColumn_key in dictionary:
+            relationship_toColumn = str(dictionary[Relationship.toColumn_key])
+            # name cannot be whitespace
+            if relationship_toColumn.isspace():
+                raise RuntimeError('Relationship dict has empty toColumn key value')
+        else:
+            raise RuntimeError('Relationship dict has no toColumn key')			
+       
+	    # fromTable is required
+        if Relationship.fromTable_key in dictionary:
+            relationship_fromTable = str(dictionary[Relationship.fromTable_key])
+            # name cannot be whitespace
+            if relationship_fromTable.isspace():
+                raise RuntimeError('Relationship dict has empty fromTable key value')
+        else:
+            raise RuntimeError('Relationship dict has no fromTable key')
+
+        # toTable is required
+        if Relationship.toTable_key in dictionary:
+            relationship_toTable = str(dictionary[Relationship.toTable_key])
+            # name cannot be whitespace
+            if relationship_toTable.isspace():
+                raise RuntimeError('Relationship dict has empty toTable key value')
+        else:
+            raise RuntimeError('Relationship dict has no toTable key')
+
+        return Relationship(name=relationship_name, crossFilteringBehavior=relationship_crossFilteringBehavior, 
+											fromColumn=relationship_fromColumn, toColumn=relationship_toColumn, 
+											fromTable=relationship_fromTable, toTable=relationship_toTable)
+
+    def __init__(self, name, crossFilteringBehavior=None, fromColumn=None, fromTable=None, name=None, toColumn=None, toTable=None):
+		self.crossFilteringBehavior=crossFilteringBehavior
+		self.fromColumn=fromColumn
+		self.fromTable=fromTable
+		self.name=name
+		self.toColumn=toColumn
+		self.toTable=toTable
+
+    def __repr__(self):
+        return f'<Relationship {str(self.__dict__)}>'
+
+
+class RelationshipEncoder(json.JSONEncoder):
+    def default(self, o):
+        json_dict = {
+			Relationship.crossFilteringBehavior_key:o.crossFilteringBehavior,
+			Relationship.fromColumn_key:o.fromColumn,
+			Relationship.fromTable_key:o.fromTable,
+			Relationship.name_key:o.name,
+			Relationship.toColumn_key:o.toColumn,
+			Relationship.toTable_key:o.toTable,
+        }
+
+        return json_dict
+
+
+#edit <EOE>
 
 
 class Measure:

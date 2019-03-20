@@ -9,6 +9,7 @@ from .dataset import *
 class Datasets:
     # url snippets
     groups_snippet = 'groups'
+	relationships_snippet = 'groups'
     datasets_snippet = 'datasets'
     tables_snippet = 'tables'
     rows_snippet = 'rows'
