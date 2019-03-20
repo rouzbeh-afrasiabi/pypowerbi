@@ -1,9 +1,6 @@
 # -*- coding: future_fstrings -*-
 import json
 
-class Test:
-	def default():
-		print('hello')
 
 class Dataset:
     # json keys
