@@ -1,7 +1,10 @@
 # -*- coding: future_fstrings -*-
 import json
 
-print('using edited version')
+class Test:
+	def default():
+		print('hello')
+
 class Dataset:
     # json keys
     id_key = 'id'
