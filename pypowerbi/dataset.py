@@ -187,7 +187,7 @@ class Relationship:
         if ((Relationship.name_key in dictionary)) :
             relationship_name = str(dictionary[Relationship.name_key])
             # name cannot be whitespace
-            if relationship_name.isspace():
+            if (relationship_name.isspace() or relationship_name is None):
                 raise RuntimeError('Relationship dict has empty name key value')
         else:
             raise RuntimeError('Relationship dict has no name key')
