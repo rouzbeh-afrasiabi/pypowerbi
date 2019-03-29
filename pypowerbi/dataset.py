@@ -180,11 +180,11 @@ class Relationship:
     def from_dict(cls, dictionary):
         """
         Creates a Relationship from a dictionary, 'name' key value required
-        :param dictionary: The dictionary to create the table from
+        :param dictionary: The dictionary to create the relationship from
         :return: A relationship created from the dictionary
         """
         # name is required
-        if Relationship.name_key in dictionary:
+        if ((Relationship.name_key in dictionary) and Relationship.name_key) :
             relationship_name = str(dictionary[Relationship.name_key])
             # name cannot be whitespace
             if relationship_name.isspace():
