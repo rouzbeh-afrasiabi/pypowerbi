@@ -184,7 +184,8 @@ class Relationship:
         :return: A relationship created from the dictionary
         """
         # name is required
-        if ((Relationship.name_key in dictionary) and Relationship.name_key) :
+        if ((Relationship.name_key in dictionary)) :
+            print(Relationship.name_key)
             relationship_name = str(dictionary[Relationship.name_key])
             # name cannot be whitespace
             if relationship_name.isspace():
