@@ -105,17 +105,11 @@ class DatasetEncoder(json.JSONEncoder):
         table_encoder = TableEncoder()
         relationship_encoder=RelationshipEncoder()
         
-        if(o.relationships):
-            json_dict = {
-                Dataset.name_key: o.name,
-                Dataset.tables_key: [table_encoder.default(x) for x in o.tables],
-    			Dataset.relationships_key: [relationship_encoder.default(x) for x in o.relationships]
-            }
-        else:
-            json_dict = {
-                Dataset.name_key: o.name,
-                Dataset.tables_key: [table_encoder.default(x) for x in o.tables]
-            }
+        json_dict = {
+            Dataset.name_key: o.name,
+            Dataset.tables_key: [table_encoder.default(x) for x in o.tables],
+			Dataset.relationships_key: [relationship_encoder.default(x) for x in o.relationships]
+        }
 
         return json_dict
 
@@ -370,4 +364,6 @@ class Row:
 
 class RowEncoder(json.JSONEncoder):
     def default(self, o):
+        if isinstance(o, complex):
+            print('complex')
         return o.__dict__
