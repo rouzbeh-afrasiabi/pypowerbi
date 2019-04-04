@@ -217,6 +217,7 @@ class Datasets:
         json_dict = {
             'rows': [row_encoder.default(x) for x in rows]
         }
+        print(json_dict)
 
         # get the response
         response = requests.post(url, headers=headers, json=json_dict)
