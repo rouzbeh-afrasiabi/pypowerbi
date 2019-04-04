@@ -1,6 +1,9 @@
 # -*- coding: future_fstrings -*-
 import requests
-import json
+try:
+    import rapidjson as json
+except ImportError:
+    import json
 
 from requests.exceptions import HTTPError
 from .dataset import *

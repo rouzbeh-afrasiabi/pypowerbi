@@ -1,5 +1,8 @@
 # -*- coding: future_fstrings -*-
-import json
+try:
+    import rapidjson as json
+except ImportError:
+    import json
 
 
 class Dataset:
