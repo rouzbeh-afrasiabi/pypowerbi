@@ -364,6 +364,4 @@ class Row:
 
 class RowEncoder(json.JSONEncoder):
     def default(self, o):
-        if isinstance(o, complex):
-            return [o.real, o.imag]
         return o.__dict__
