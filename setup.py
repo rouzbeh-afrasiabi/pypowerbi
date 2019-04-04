@@ -12,5 +12,6 @@ setup(name='pypowerbi',
             'requests',
             'adal',
             'future-fstrings',
+		'simplejson'
       ],
       zip_safe=False)
