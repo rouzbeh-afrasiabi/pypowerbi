@@ -104,12 +104,18 @@ class DatasetEncoder(json.JSONEncoder):
     def default(self, o):
         table_encoder = TableEncoder()
         relationship_encoder=RelationshipEncoder()
-
-        json_dict = {
-            Dataset.name_key: o.name,
-            Dataset.tables_key: [table_encoder.default(x) for x in o.tables],
-			Dataset.relationships_key: [relationship_encoder.default(x) for x in o.relationships]
-        }
+        
+        if(o.relationships):
+            json_dict = {
+                Dataset.name_key: o.name,
+                Dataset.tables_key: [table_encoder.default(x) for x in o.tables],
+    			Dataset.relationships_key: [relationship_encoder.default(x) for x in o.relationships]
+            }
+        else:
+            json_dict = {
+                Dataset.name_key: o.name,
+                Dataset.tables_key: [table_encoder.default(x) for x in o.tables]
+            }
 
         return json_dict
 
@@ -187,7 +193,7 @@ class Relationship:
         if ((Relationship.name_key in dictionary)) :
             relationship_name = str(dictionary[Relationship.name_key])
             # name cannot be whitespace
-            if (relationship_name.isspace() or relationship_name is None):
+            if relationship_name.isspace():
                 raise RuntimeError('Relationship dict has empty name key value')
         else:
             raise RuntimeError('Relationship dict has no name key')
