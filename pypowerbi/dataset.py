@@ -1,5 +1,5 @@
 # -*- coding: future_fstrings -*-
-import json
+import simplejson as json
 
 
 class Dataset:

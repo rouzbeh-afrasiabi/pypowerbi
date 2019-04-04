@@ -1,6 +1,6 @@
 # -*- coding: future_fstrings -*-
 import requests
-import json
+import simplejson as json
 
 from requests.exceptions import HTTPError
 from .dataset import *
