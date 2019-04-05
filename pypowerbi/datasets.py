@@ -96,7 +96,6 @@ class Datasets:
         # 200 is the only successful code, raise an exception on any other response code
         if response.status_code != 200:
             raise HTTPError(response, f'Get Datasets request returned http error: {response.json()}')
-        print(json.loads(response.text))
         return Dataset.from_dict(json.loads(response.text))
 
     def post_dataset(self, dataset, group_id=None):
