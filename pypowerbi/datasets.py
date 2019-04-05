@@ -66,7 +66,6 @@ class Datasets:
 
         # get the response
         response = requests.get(url, headers=headers)
-        print(url, headers)
         # 200 is the only successful code, raise an exception on any other response code
         if response.status_code != 200:
             raise HTTPError(response, f'Get Datasets request returned http error: {response.json()}')
@@ -179,7 +178,7 @@ class Datasets:
             groups_part = f'/{self.groups_snippet}/{group_id}/'
 
         # form the url
-        url = f'{self.base_url}{groups_part}/{self.datasets_snippet}/{dataset_id}/{self.tables_snippet}/{self.relationships_snippet}'
+        url = f'{self.base_url}{groups_part}/{self.datasets_snippet}/{dataset_id}/{self.tables_snippet}/'
         # form the headers
         headers = self.client.auth_header
 
