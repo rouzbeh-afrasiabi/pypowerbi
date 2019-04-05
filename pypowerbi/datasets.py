@@ -66,7 +66,7 @@ class Datasets:
 
         # get the response
         response = requests.get(url, headers=headers)
-
+        print(url, headers)
         # 200 is the only successful code, raise an exception on any other response code
         if response.status_code != 200:
             raise HTTPError(response, f'Get Datasets request returned http error: {response.json()}')
